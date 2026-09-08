@@ -1,0 +1,25 @@
+[package]
+name = "cleanmyfiles"
+version = "0.2.0"
+description = "A local-first disk analyzer and duplicate cleaner"
+authors = ["CleanMyFiles contributors"]
+edition = "2021"
+license = "MIT"
+
+[lib]
+name = "cleanmyfiles_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+walkdir = "2.5"
+blake3 = "1.5"
+trash = "5"
+
+fs2 = "0.4"

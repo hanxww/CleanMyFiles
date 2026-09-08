@@ -1,0 +1,27 @@
+name: Bug report
+description: Report incorrect or unsafe behavior
+title: "bug: "
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Include the expected behavior and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: CleanMyFiles version
