@@ -1,145 +1,337 @@
-# CleanMyFiles
+<div align="center">
 
-**Understand your disk before deleting anything.**
+<img src="docs/assets/readme-hero.svg" alt="CleanMyFiles — Understand your disk before deleting anything" width="100%" />
 
-CleanMyFiles is a local-first desktop disk analyzer for Windows, macOS and Linux. It explains where storage went, verifies exact duplicates, surfaces large and forgotten files, and lets you move selected items to the operating system Trash / Recycle Bin.
+<br />
 
-No account. No cloud scan. No automatic purge.
 
-## Highlights
 
-- Scan a folder or an entire drive
-- Detect available drive roots from the desktop app
-- Live scan progress with cancellation
-- Storage breakdown by file type
-- Largest top-level folder map
-- Top 100 largest files
-- Large files older than a configurable age
-- Focused Downloads view
-- Conservative cache / temporary / old-installer candidates
-- Exact duplicate verification: size → quick fingerprint → full BLAKE3 hash
-- In-session hash cache to speed up rescans
-- Reveal any surfaced file in the native file manager
-- Explicit selection + confirmation before removal
-- Removal through the system Trash / Recycle Bin
-- Configurable thresholds and ignored folder names
-- Browser preview mode for contributors
 
-## Safety model
 
-CleanMyFiles intentionally behaves more like an analyzer than a one-click cleaner.
 
-1. Nothing is selected automatically on startup.
-2. Nothing is permanently deleted by a scan action.
-3. Duplicate groups require a full content hash match.
-4. “Select extra copies” keeps one path unselected for manual review.
-5. Cache and temporary items are shown as candidates, not declared safe.
-6. Symbolic links are not followed.
-7. Paths and file contents used for analysis stay on the machine.
 
-A duplicate can still matter because another application expects it at a specific path. Always review selections.
+English · Русский
 
-## Views
+A local-first desktop disk analyzer that helps you see what is taking space — before you remove anything.
 
-- **Overview** — drive usage, analyzed bytes, duplicate waste, file types and top-level folders
-- **Duplicates** — exact content-match groups
-- **Large files** — the heaviest surfaced files
-- **Old files** — large files older than the configured threshold
-- **Downloads** — files found under Downloads within the scan root
-- **Cleanup** — conservative cache, temp and old installer candidates
-- **Settings** — duplicate size, large-file size, age and exclusions
+No account · No cloud scan · No automatic purge
 
-## Windows: run from source
+Download · Roadmap · Report a bug · Request a feature
 
-Requirements:
+</div>
 
-- Node.js LTS
-- Rust stable with the MSVC toolchain
-- Microsoft C++ Build Tools with **Desktop development with C++**
-- WebView2 (already present on modern Windows 10/11 in normal installations)
+Why CleanMyFiles?
 
-Install Rust:
+Disk cleanup tools often make a simple problem feel risky: they show a large number, label files as “junk”, and encourage you to delete first and ask questions later.
 
-```powershell
+CleanMyFiles takes the opposite approach. It is built to inspect first, explain clearly, and only remove files you explicitly select.
+
+Scan a drive
+    ↓
+Understand where the space went
+    ↓
+Review duplicates, large files and cleanup candidates
+    ↓
+Select only what you want
+    ↓
+Move it to the system Trash / Recycle Bin
+
+Your scan data and file contents stay on your machine.
+
+Features
+
+
+
+Capability
+
+What it does
+
+🗂️
+
+Drive & folder scanning
+
+Scan an entire drive or any folder you choose
+
+📊
+
+Storage overview
+
+Break down analyzed space by type and top-level folder
+
+🧭
+
+Live progress
+
+See scan progress in real time and cancel when needed
+
+🧬
+
+Exact duplicates
+
+Verify duplicates by size → quick fingerprint → full BLAKE3 hash
+
+📦
+
+Large files
+
+Surface the heaviest files found during a scan
+
+🕰️
+
+Old files
+
+Find large files older than your configured threshold
+
+⬇️
+
+Downloads view
+
+Review files located under Downloads inside the scan root
+
+🧹
+
+Cleanup candidates
+
+Surface conservative cache, temp and old-installer candidates
+
+👁️
+
+Reveal in file manager
+
+Open any surfaced file in Explorer / Finder / file manager
+
+🗑️
+
+Safe removal
+
+Move explicitly selected files to the OS Trash / Recycle Bin
+
+⚙️
+
+Exclusions & thresholds
+
+Tune duplicate size, large-file size, file age and ignored folders
+
+🌐
+
+Browser preview
+
+Run the UI with representative sample data for frontend work
+
+[!IMPORTANT]
+Cleanup candidates are candidates, not guarantees that a file is disposable. CleanMyFiles intentionally avoids automatic destructive decisions.
+
+Safety by design
+
+CleanMyFiles is intentionally closer to a disk inspector than a one-click cleaner.
+
+Nothing is selected automatically when a scan finishes.
+
+Scanning never deletes files.
+
+Duplicate groups require a full content hash match.
+
+Select extra copies keeps one file in each duplicate group unselected for review.
+
+Cache, temp and installer results are shown conservatively and require manual confirmation.
+
+Symbolic links are not followed during traversal.
+
+Removal uses the operating system Trash / Recycle Bin, not permanent deletion.
+
+File paths and analyzed contents stay local to the machine.
+
+A byte-for-byte duplicate can still matter if an application expects that file at a particular path. Review before removing.
+
+App views
+
+Overview
+├─ drive usage
+├─ analyzed bytes
+├─ duplicate waste
+├─ file-type breakdown
+└─ top-level folder map
+
+Duplicates
+├─ exact content-match groups
+└─ select extra copies
+
+Large files
+└─ top 100 surfaced files
+
+Old files
+└─ large files older than your age threshold
+
+Downloads
+└─ files found under Downloads
+
+Cleanup
+└─ cache / temp / old installer candidates
+
+Settings
+├─ duplicate minimum size
+├─ large-file threshold
+├─ old-file age
+└─ ignored folder names
+
+Download
+
+The packaged release target for v0.2 is Windows.
+
+➡️ Download the latest release
+
+Typical release assets:
+
+CleanMyFiles_0.2.0_x64-setup.exe   ← recommended for most users
+CleanMyFiles_0.2.0_x64_en-US.msi   ← MSI package
+
+The native core also contains macOS and Linux paths, but those platforms are not yet part of the official release workflow.
+
+Run from source
+
+Requirements
+
+Node.js 20+
+
+Rust stable with the MSVC toolchain on Windows
+
+Microsoft C++ Build Tools with Desktop development with C++
+
+WebView2 on Windows (normally already installed on modern Windows 10/11)
+
+Windows
+
+Install Rust if needed:
+
 winget install --id Rustlang.Rustup
-```
 
 Reopen the terminal, then:
 
-```powershell
 rustup default stable-msvc
-```
 
-In the project folder:
+Install dependencies and launch the desktop app:
 
-```powershell
+git clone https://github.com/hanxww/CleanMyFiles.git
+cd CleanMyFiles
 npm install
 npm run desktop:dev
-```
 
-Or double-click `dev-windows.cmd`.
+You can also run:
 
-## Build a Windows installer
+dev-windows.cmd
 
-The repository is configured to generate both NSIS (`-setup.exe`) and MSI bundles on Windows:
+Build Windows installers
 
-```powershell
 npm install
 npm run desktop:build
-```
 
-Or double-click:
+Or use:
 
-```text
 build-windows.cmd
-```
 
-Built installers are placed under:
+The helper script attempts to locate Visual Studio Build Tools automatically and loads the MSVC environment if link.exe is not already available.
 
-```text
+Build output:
+
 src-tauri\target\release\bundle\
-```
+├─ nsis\
+│  └─ CleanMyFiles_*_x64-setup.exe
+└─ msi\
+   └─ CleanMyFiles_*_x64_en-US.msi
 
-MSI creation may require the Windows VBSCRIPT optional feature. If MSI bundling is unavailable on a machine, the NSIS setup executable remains the simpler distribution format.
+[!NOTE]
+MSI creation may require the Windows VBSCRIPT optional feature. The NSIS setup executable is the simpler distribution format for most users.
 
-## GitHub release build
+Browser preview
 
-`.github/workflows/windows-release.yml` builds the Windows application on `windows-latest` and creates a draft GitHub Release when you push a `v*` tag or manually run the workflow.
+Frontend contributors can run the interface without native disk access:
 
-This is useful when you do not want every contributor to install the Windows native build toolchain just to obtain an installer.
-
-## Browser UI preview
-
-```bash
 npm install
 npm run dev
-```
 
-The browser build intentionally shows representative sample data. Browsers cannot recursively inspect arbitrary disk roots with the same native capabilities as the Tauri desktop process.
+The browser build intentionally uses representative sample data. A browser cannot recursively inspect arbitrary disk roots with the same native filesystem access as the Tauri desktop process.
 
-## Architecture
+How duplicate detection works
 
-```text
-React / TypeScript UI
-        │
-        │ Tauri IPC + events
-        ▼
-Rust scan engine
-  ├─ WalkDir traversal
-  ├─ file categorization
-  ├─ folder aggregation
-  ├─ age / Downloads / cleanup classification
-  ├─ quick duplicate fingerprinting
-  ├─ BLAKE3 verification + session cache
-  └─ native Trash / Recycle Bin operations
-```
+CleanMyFiles avoids hashing every file from start to finish unnecessarily.
 
-The heavy scan runs on Tauri's blocking worker pool rather than the webview thread. Progress is emitted back to the interface as the filesystem is traversed and duplicate candidate groups are verified.
+Files
+  │
+  ├─ group by size
+  │
+  ├─ quick fingerprint for candidates
+  │
+  └─ full BLAKE3 hash for final verification
+          │
+          └─ exact duplicate group
 
-## Project structure
+Full hashes are cached for the current session to make rescans cheaper.
 
-```text
-cleanmyfiles/
+Architecture
+
+┌──────────────────────────────────────────────┐
+│          React 19 + TypeScript UI            │
+│                                              │
+│  views · selection · progress · settings     │
+└───────────────────┬──────────────────────────┘
+                    │ Tauri IPC + events
+                    ▼
+┌──────────────────────────────────────────────┐
+│               Rust native core               │
+│                                              │
+│  WalkDir traversal                           │
+│  file categorization                         │
+│  folder aggregation                          │
+│  age / Downloads / cleanup classification    │
+│  quick duplicate fingerprinting              │
+│  BLAKE3 verification + session cache         │
+│  native Trash / Recycle Bin operations       │
+└──────────────────────────────────────────────┘
+
+Heavy scanning runs on Tauri's blocking worker pool rather than the webview thread. Progress is emitted back to the UI while traversal and duplicate verification are running.
+
+Tech stack
+
+Layer
+
+Technology
+
+Desktop shell
+
+Tauri 2
+
+Native core
+
+Rust
+
+UI
+
+React 19 + TypeScript
+
+Frontend tooling
+
+Vite
+
+Duplicate verification
+
+BLAKE3
+
+Filesystem traversal
+
+walkdir
+
+Safe removal
+
+trash
+
+Project structure
+
+CleanMyFiles/
+├─ .github/
+│  ├─ ISSUE_TEMPLATE/
+│  └─ workflows/
+├─ docs/
+│  └─ assets/
 ├─ src/
 │  ├─ lib/
 │  ├─ App.tsx
@@ -147,34 +339,54 @@ cleanmyfiles/
 │  └─ types.ts
 ├─ src-tauri/
 │  ├─ capabilities/
+│  ├─ icons/
 │  ├─ src/
 │  │  ├─ lib.rs
 │  │  └─ main.rs
 │  ├─ Cargo.toml
 │  └─ tauri.conf.json
-├─ .github/workflows/
 ├─ build-windows.cmd
 ├─ dev-windows.cmd
+├─ CHANGELOG.md
 ├─ CONTRIBUTING.md
+├─ ROADMAP.md
 ├─ SECURITY.md
-└─ ROADMAP.md
-```
+└─ README.md
 
-## Tech
+Roadmap
 
-- Tauri 2
-- Rust
-- React 19 + TypeScript
-- Vite
-- BLAKE3
-- `walkdir`
-- `trash`
-- `fs2`
+The current focus is making disk inspection faster, clearer and safer before adding more aggressive cleanup features.
 
-## Contributing
+Planned directions include:
 
-Focused bug reports, platform testing and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before a large change.
+richer disk visualization
 
-## License
+faster repeated scans and persistent metadata caching
 
-MIT
+improved system/cache detectors
+
+better scan filters and exclusions
+
+packaging and testing for macOS and Linux
+
+more polished release and update flow
+
+See ROADMAP.md for the detailed roadmap.
+
+Contributing
+
+Bug reports, platform testing and focused pull requests are welcome.
+
+Before a large change, please read CONTRIBUTING.md. Security-related reports should follow SECURITY.md.
+
+License
+
+CleanMyFiles is available under the MIT License.
+
+<div align="center">
+
+Understand first. Clean second.
+
+If CleanMyFiles is useful to you, consider giving the repository a ⭐ — it helps other people discover the project.
+
+</div>
